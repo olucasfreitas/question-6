@@ -32,14 +32,11 @@ function App() {
     const tortoiseSpeed = 1;
     const tortoiseHeadStart = 100;
 
-    // Using physics: time when Achilles catches tortoise
     const catchTime = tortoiseHeadStart / (achillesSpeed - tortoiseSpeed);
+
     const catchPosition = achillesSpeed * catchTime;
 
-    // Fixed frame of reference - always measured from starting line
-    const totalTime = catchTime + 2; // Show a bit after catching
-
-    return { catchTime, catchPosition, totalTime };
+    return { catchTime, catchPosition };
   };
 
   const startAnimation = () => {
