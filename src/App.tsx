@@ -130,9 +130,9 @@ function App() {
 
         {/* Animation Status */}
         {isAnimating && (
-          <div className="text-center mb-4">
-            <div className="inline-flex items-center px-4 py-2 bg-blue-100 rounded-full">
-              <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse mr-2"></div>
+          <div className="flex justify-center mb-4">
+            <div className="flex items-center px-4 py-2 bg-blue-100 rounded-full gap-2">
+              <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
               <span className="text-blue-800 font-medium">
                 Time: {animationTime.toFixed(1)}s
               </span>
@@ -142,100 +142,106 @@ function App() {
 
         {/* Race Track */}
         <div ref={trackRef} className="bg-white rounded-lg shadow-lg p-8 mb-6">
-          <div className="relative w-full" style={{ height: '220px' }}>
-            {/* Fixed Gap and Position Display */}
-            <div className="absolute top-2 left-1/2 transform -translate-x-1/2 flex gap-6 text-sm text-gray-700 font-medium">
-              <span>Achilles: {positions.achilles.toFixed(1)}</span>
-              <span>Gap: {(positions.tortoise - positions.achilles).toFixed(1)}</span>
-              <span>Tortoise: {positions.tortoise.toFixed(1)}</span>
-            </div>
+          <div className="grid grid-rows-[auto_1fr_auto] gap-4" style={{ height: '220px' }}>
 
-            {/* Track */}
-            <div
-              className="absolute bg-gray-200 rounded-full"
-              style={{
-                height: '8px',
-                left: '30px',
-                width: `${getPixelPosition(125) - 30}px`,
-                top: '60px'
-              }}
-            />
-
-            {/* Gap visualization - same height as track */}
-            {positions.tortoise > positions.achilles && (
-              <motion.div
-                className="absolute bg-yellow-300 opacity-70 rounded-full"
-                style={{
-                  left: `${getPixelPosition(positions.achilles)}px`,
-                  width: `${Math.max(getPixelPosition(positions.tortoise) - getPixelPosition(positions.achilles), 2)}px`,
-                  height: '8px',
-                  top: '60px'
-                }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.7 }}
-                transition={{ duration: 0.3 }}
-              />
-            )}
-
-            {/* Distance markers */}
-            {[0, 25, 50, 75, 100, 125].map(distance => (
-              <div
-                key={distance}
-                className="absolute text-xs text-gray-500 text-center"
-                style={{
-                  left: `${getPixelPosition(distance)}px`,
-                  transform: 'translateX(-50%)',
-                  top: '76px'
-                }}
-              >
-                {distance}
+            {/* Position Display Row */}
+            <div className="flex justify-center">
+              <div className="flex gap-6 text-sm text-gray-700 font-medium">
+                <span>Achilles: {positions.achilles.toFixed(1)}</span>
+                <span>Gap: {(positions.tortoise - positions.achilles).toFixed(1)}</span>
+                <span>Tortoise: {positions.tortoise.toFixed(1)}</span>
               </div>
-            ))}
-
-            {/* Catch point indicator */}
-            <div
-              className="absolute w-0.5 h-8 bg-green-500"
-              style={{
-                left: `${getPixelPosition(catchPosition)}px`,
-                top: '52px'
-              }}
-            />
-            <div
-              className="absolute text-xs text-green-600 text-center font-medium"
-              style={{
-                left: `${getPixelPosition(catchPosition)}px`,
-                transform: 'translateX(-50%)',
-                top: '92px'
-              }}
-            >
-              Catch Point
             </div>
 
-            {/* Achilles with circle */}
-            <motion.div
-              className="absolute w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-2xl"
-              style={{
-                transform: 'translateX(-50%)',
-                top: '30px'
-              }}
-              animate={{ x: getPixelPosition(positions.achilles) }}
-              transition={{ duration: 0.1, ease: "linear" }}
-            >
-              🏃
-            </motion.div>
+            {/* Track Area */}
+            <div className="relative flex flex-col justify-center">
 
-            {/* Tortoise with circle */}
-            <motion.div
-              className="absolute w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-2xl"
-              style={{
-                transform: 'translateX(-50%)',
-                top: '110px'
-              }}
-              animate={{ x: getPixelPosition(positions.tortoise) }}
-              transition={{ duration: 0.1, ease: "linear" }}
-            >
-              🐢
-            </motion.div>
+              {/* Achilles Lane */}
+              <div className="relative h-16 flex items-center mb-2">
+                <motion.div
+                  className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-2xl absolute z-10"
+                  animate={{
+                    left: `${getPixelPosition(positions.achilles)}px`
+                  }}
+                  transition={{ duration: 0.1, ease: "linear" }}
+                  style={{ transform: 'translateX(-50%)' }}
+                >
+                  🏃
+                </motion.div>
+              </div>
+
+              {/* Track and Gap Visualization */}
+              <div className="relative h-8 flex items-center">
+                {/* Main Track */}
+                <div
+                  className="bg-gray-200 rounded-full h-2 relative"
+                  style={{
+                    width: `${getPixelPosition(125) - 30}px`,
+                    marginLeft: '30px'
+                  }}
+                >
+                  {/* Gap overlay */}
+                  {positions.tortoise > positions.achilles && (
+                    <motion.div
+                      className="absolute bg-yellow-300 opacity-70 rounded-full h-2"
+                      style={{
+                        left: `${getPixelPosition(positions.achilles) - 30}px`,
+                        width: `${Math.max(getPixelPosition(positions.tortoise) - getPixelPosition(positions.achilles), 2)}px`,
+                      }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.7 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
+                </div>
+
+                {/* Catch Point Indicator */}
+                <div
+                  className="absolute w-0.5 h-8 bg-green-500 -translate-y-1"
+                  style={{ left: `${getPixelPosition(catchPosition)}px` }}
+                />
+              </div>
+
+              {/* Tortoise Lane */}
+              <div className="relative h-16 flex items-center mt-2">
+                <motion.div
+                  className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-2xl absolute z-10"
+                  animate={{
+                    left: `${getPixelPosition(positions.tortoise)}px`
+                  }}
+                  transition={{ duration: 0.1, ease: "linear" }}
+                  style={{ transform: 'translateX(-50%)' }}
+                >
+                  🐢
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Distance Markers and Labels Row */}
+            <div className="grid grid-cols-2 gap-4">
+              {/* Distance Markers */}
+              <div className="flex justify-between items-start" style={{ marginLeft: '30px', width: `${getPixelPosition(125) - 30}px` }}>
+                {[0, 25, 50, 75, 100, 125].map(distance => (
+                  <div key={distance} className="flex flex-col items-center">
+                    <div className="text-xs text-gray-500">{distance}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Catch Point Label */}
+              <div className="flex justify-start">
+                <div
+                  className="text-xs text-green-600 font-medium"
+                  style={{
+                    marginLeft: `${getPixelPosition(catchPosition) - 30}px`,
+                    transform: 'translateX(-50%)'
+                  }}
+                >
+                  Catch Point
+                </div>
+              </div>
+            </div>
+
           </div>
 
           {/* Legend */}
