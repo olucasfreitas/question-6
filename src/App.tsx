@@ -83,8 +83,13 @@ function App() {
   }, [isAnimating]);
 
   const getPixelPosition = (logicalPosition: number) => {
+    // Reserve 30px padding on each side (total 60px)
     const trackWidth = containerWidth - 60;
+
+    // Maximum logical position in the race
     const maxPosition = 150;
+
+    // Start at 30px (left padding) + proportional position within track
     return 30 + (logicalPosition / maxPosition) * trackWidth;
   };
 
