@@ -176,8 +176,8 @@ function App() {
                     <motion.div
                       className="absolute bg-yellow-300 opacity-70 rounded-full h-3 top-0"
                       style={{
-                        left: `${((positions.achilles / 150) * 100)}%`,
-                        width: `${Math.max(((positions.tortoise - positions.achilles) / 150) * 100, 1)}%`,
+                        left: `${getPixelPosition(positions.achilles) - 30}px`,
+                        width: `${getPixelPosition(positions.tortoise) - getPixelPosition(positions.achilles)}px`,
                       }}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 0.7 }}
