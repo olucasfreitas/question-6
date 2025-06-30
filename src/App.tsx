@@ -89,7 +89,7 @@ function App() {
 
   const getPixelPosition = (logicalPosition: number) => {
     const trackWidth = containerWidth - 60;
-    const maxPosition = 125;
+    const maxPosition = 150;
     return 30 + (logicalPosition / maxPosition) * trackWidth;
   };
 
@@ -181,8 +181,8 @@ function App() {
                     <motion.div
                       className="absolute bg-yellow-300 opacity-70 rounded-full h-3 top-0"
                       style={{
-                        left: `${((positions.achilles / 125) * 100)}%`,
-                        width: `${Math.max(((positions.tortoise - positions.achilles) / 125) * 100, 1)}%`,
+                        left: `${((positions.achilles / 150) * 100)}%`,
+                        width: `${Math.max(((positions.tortoise - positions.achilles) / 150) * 100, 1)}%`,
                       }}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 0.7 }}
@@ -193,7 +193,7 @@ function App() {
                   {/* Catch Point Indicator */}
                   <div
                     className="absolute w-1 h-8 bg-green-500 top-1/2 transform -translate-y-1/2 -translate-x-1/2"
-                    style={{ left: `${(catchPosition / 125) * 100}%` }}
+                    style={{ left: `${(catchPosition / 150) * 100}%` }}
                   />
                 </div>
               </div>
@@ -217,7 +217,7 @@ function App() {
             <div className="grid grid-cols-1 gap-4">
               {/* Distance Markers */}
               <div className="flex justify-between items-center px-8">
-                {[0, 25, 50, 75, 100, 125].map(distance => (
+                {[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150].map(distance => (
                   <div key={distance} className="flex flex-col items-center">
                     <div className="w-px h-4 bg-gray-400 mb-1"></div>
                     <div className="text-xs text-gray-500 font-medium">{distance}</div>
