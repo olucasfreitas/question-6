@@ -13,7 +13,6 @@ function App() {
   const [animationTime, setAnimationTime] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
 
-  // Update container width on mount and resize
   useEffect(() => {
     const updateWidth = () => {
       if (trackRef.current) {
@@ -26,7 +25,6 @@ function App() {
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
-  // Calculate correct approach (fixed frame of reference)
   const calculateCorrectAnimation = () => {
     const achillesSpeed = 10;
     const tortoiseSpeed = 1;
@@ -100,9 +98,6 @@ function App() {
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
             Zeno's Paradox: Achilles and the Tortoise
           </h1>
-          <p className="text-lg text-gray-600">
-            Watch as Achilles catches and overtakes the tortoise
-          </p>
         </div>
 
         {/* Controls */}
