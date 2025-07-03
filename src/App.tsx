@@ -51,7 +51,6 @@ function App() {
     setPositions({ achilles: 0, tortoise: 100 });
   };
 
-  // Correct animation (continuous, fixed frame of reference)
   useEffect(() => {
     if (isAnimating) {
       const { catchTime } = calculateCorrectAnimation();
@@ -59,7 +58,7 @@ function App() {
         setAnimationTime(prev => {
           const newTime = prev + 0.1;
 
-          // Stop at catch time instead of continuing
+          // Stop at catch time
           if (newTime >= catchTime) {
             setIsAnimating(false);
             return catchTime;
@@ -98,14 +97,12 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
       <div className="max-w-5xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
             Zeno's Paradox: Achilles and the Tortoise
           </h1>
         </div>
 
-        {/* Controls */}
         <div className="flex justify-center gap-4 mb-8">
           <button
             onClick={startAnimation}
@@ -125,7 +122,6 @@ function App() {
           </button>
         </div>
 
-        {/* Animation Status */}
         {isAnimating && (
           <div className="flex justify-center mb-4">
             <div className="flex items-center px-4 py-2 bg-blue-100 rounded-full gap-2">
@@ -149,8 +145,6 @@ function App() {
             </div>
 
             <div className="flex flex-col justify-center gap-4">
-
-              {/* Achilles Lane */}
               <div className="relative h-12 flex items-center">
                 <motion.div
                   className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-2xl absolute z-10"
@@ -168,7 +162,6 @@ function App() {
                 <div
                   className="bg-gray-200 rounded-full h-3 flex-1 relative"
                 >
-                  {/* Gap overlay */}
                   {positions.tortoise > positions.achilles && (
                     <motion.div
                       className="absolute bg-yellow-300 opacity-70 rounded-full h-3 top-0"
@@ -185,7 +178,6 @@ function App() {
                 </div>
               </div>
 
-              {/* Tortoise Lane */}
               <div className="relative h-12 flex items-center">
                 <motion.div
                   className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-2xl absolute z-10"
